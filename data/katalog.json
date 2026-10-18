@@ -1,0 +1,158 @@
+{
+	"version": 1,
+	"hinweis": "Beispielkatalog für die JSON-Phase. Preise und Daten sind Platzhalter. Beträge in Cent. Bilder: Pfade relativ zum Plugin-Ordner oder https-URLs.",
+	"kategorien": [
+		{ "id": "kameras", "slug": "kameras", "name": "Kameras", "reihenfolge": 1 },
+		{ "id": "objektive", "slug": "objektive", "name": "Objektive", "reihenfolge": 2 },
+		{ "id": "licht", "slug": "licht", "name": "Licht", "reihenfolge": 3 },
+		{ "id": "ton", "slug": "ton", "name": "Ton", "reihenfolge": 4 },
+		{ "id": "grip-support", "slug": "grip-support", "name": "Grip & Support", "reihenfolge": 5 },
+		{ "id": "kits", "slug": "kits", "name": "Kits", "reihenfolge": 6 }
+	],
+	"items": [
+		{
+			"id": "eq-0001",
+			"slug": "sony-fx6",
+			"name": "Sony FX6",
+			"kategorie": "kameras",
+			"kurztext": "Vollformat-Cinema-Kamera mit 4K bis 120 fps, Dual Base ISO und eingebautem variablem ND.",
+			"beschreibung": "<p>Kompakte Vollformat-Kamera aus der Cinema Line. Ideal für Dokumentarfilm, Interviews und Run-and-Gun-Einsätze.</p><p>Lieferung mit Top-Handle, LCD-Sucher, zwei Akkus und zwei CFexpress-Typ-A-Karten.</p>",
+			"technische_daten": [
+				{ "label": "Sensor", "wert": "Vollformat, 10,2 MP" },
+				{ "label": "Bajonett", "wert": "Sony E-Mount" },
+				{ "label": "Auflösung", "wert": "UHD 4K bis 120 fps" },
+				{ "label": "Basis-ISO", "wert": "800 / 12.800" },
+				{ "label": "ND-Filter", "wert": "Variabel 1/4 bis 1/128" },
+				{ "label": "Gewicht", "wert": "890 g (Body)" }
+			],
+			"preis_tag_cent": 14900,
+			"preis_woche_cent": 59600,
+			"kaution_cent": 150000,
+			"bilder": [
+				"assets/placeholder/kamera-sony-fx6.png",
+				"assets/placeholder/kamera-sony-fx6-rueckseite.png"
+			],
+			"ist_kit": false,
+			"kit_inhalt": []
+		},
+		{
+			"id": "eq-0002",
+			"slug": "sigma-cine-18-35-t2",
+			"name": "Sigma Cine 18–35 mm T2",
+			"kategorie": "objektive",
+			"kurztext": "Lichtstarkes Cine-Zoom für Super 35 mit Zahnkränzen für Follow Focus.",
+			"beschreibung": "<p>Kompaktes Zoomobjektiv mit konstanter Blende T2, gut geeignet für Gimbal- und Handkamera-Einsätze.</p>",
+			"technische_daten": [
+				{ "label": "Brennweite", "wert": "18–35 mm" },
+				{ "label": "Lichtstärke", "wert": "T2" },
+				{ "label": "Bildkreis", "wert": "Super 35" },
+				{ "label": "Bajonett", "wert": "PL oder EF" },
+				{ "label": "Frontdurchmesser", "wert": "95 mm" }
+			],
+			"preis_tag_cent": 6500,
+			"preis_woche_cent": 26000,
+			"kaution_cent": 80000,
+			"bilder": [
+				"assets/placeholder/objektiv-sigma-18-35.png"
+			],
+			"ist_kit": false,
+			"kit_inhalt": []
+		},
+		{
+			"id": "eq-0003",
+			"slug": "aputure-ls-600d-pro",
+			"name": "Aputure LS 600d Pro",
+			"kategorie": "licht",
+			"kurztext": "Tageslicht-LED mit 600 W, Bowens-Mount und wetterfestem Gehäuse.",
+			"beschreibung": "<p>Leistungsstarke Tageslicht-Leuchte für Außen- und Studioeinsätze. Inklusive Hyper-Reflektor, Netzteil und Transportkoffer.</p>",
+			"technische_daten": [
+				{ "label": "Leistung", "wert": "600 W" },
+				{ "label": "Farbtemperatur", "wert": "5600 K" },
+				{ "label": "CRI / TLCI", "wert": "≥ 96 / ≥ 96" },
+				{ "label": "Anschluss", "wert": "Bowens-Mount" },
+				{ "label": "Steuerung", "wert": "DMX, App" }
+			],
+			"preis_tag_cent": 8900,
+			"preis_woche_cent": 35600,
+			"kaution_cent": 100000,
+			"bilder": [
+				"assets/placeholder/licht-aputure-600d.png"
+			],
+			"ist_kit": false,
+			"kit_inhalt": []
+		},
+		{
+			"id": "eq-0004",
+			"slug": "sennheiser-mkh-416",
+			"name": "Sennheiser MKH 416",
+			"kategorie": "ton",
+			"kurztext": "Richtmikrofon (Kurz-Shotgun), Standard für Film und Fernsehen.",
+			"beschreibung": "<p>Robustes Superniere-Richtmikrofon mit hoher Rückwärtsdämpfung. Lieferung mit Windkorb, Fell und Tonangel.</p>",
+			"technische_daten": [
+				{ "label": "Richtcharakteristik", "wert": "Superniere / Keule" },
+				{ "label": "Frequenzbereich", "wert": "40–20.000 Hz" },
+				{ "label": "Speisung", "wert": "Phantom 48 V" },
+				{ "label": "Länge", "wert": "250 mm" }
+			],
+			"preis_tag_cent": 2500,
+			"preis_woche_cent": 10000,
+			"kaution_cent": 30000,
+			"bilder": [
+				"assets/placeholder/ton-sennheiser-mkh416.png"
+			],
+			"ist_kit": false,
+			"kit_inhalt": []
+		},
+		{
+			"id": "eq-0005",
+			"slug": "sachtler-flowtech-75",
+			"name": "Sachtler Flowtech 75 mit FSB 8",
+			"kategorie": "grip-support",
+			"kurztext": "Karbon-Stativ mit Schnellverschlüssen und Fluidkopf für Kameras bis 10 kg.",
+			"beschreibung": "<p>Leichtes Stativsystem mit 75-mm-Halbschale. Schneller Aufbau dank Klemmen am oberen Ende der Beine.</p>",
+			"technische_daten": [
+				{ "label": "Halbschale", "wert": "75 mm" },
+				{ "label": "Traglast", "wert": "bis 10 kg" },
+				{ "label": "Arbeitshöhe", "wert": "26–157 cm" },
+				{ "label": "Gewicht", "wert": "4,6 kg" }
+			],
+			"preis_tag_cent": 3500,
+			"preis_woche_cent": 14000,
+			"kaution_cent": 40000,
+			"bilder": [
+				"assets/placeholder/grip-sachtler-flowtech75.png"
+			],
+			"ist_kit": false,
+			"kit_inhalt": []
+		},
+		{
+			"id": "eq-0100",
+			"slug": "interview-kit",
+			"name": "Interview-Kit",
+			"kategorie": "kits",
+			"kurztext": "Komplettpaket für Interviews: Kamera, Objektiv, Licht, Ton und Stativ.",
+			"beschreibung": "<p>Alles für ein professionelles Interview mit einer Kamera. Abgestimmt, getestet und in Koffern verpackt.</p>",
+			"technische_daten": [
+				{ "label": "Einsatz", "wert": "Interview, eine Kamera" },
+				{ "label": "Transport", "wert": "3 Koffer" },
+				{ "label": "Gesamtgewicht", "wert": "ca. 32 kg" }
+			],
+			"preis_tag_cent": 24900,
+			"preis_woche_cent": 99600,
+			"kaution_cent": 300000,
+			"bilder": [
+				"assets/placeholder/kit-interview.png",
+				"assets/placeholder/kit-interview-inhalt.png"
+			],
+			"ist_kit": true,
+			"kit_inhalt": [
+				{ "name": "Sony FX6", "menge": 1 },
+				{ "name": "Sigma Cine 18–35 mm T2", "menge": 1 },
+				{ "name": "Aputure LS 600d Pro", "menge": 1 },
+				{ "name": "Sennheiser MKH 416", "menge": 1 },
+				{ "name": "Sachtler Flowtech 75 mit FSB 8", "menge": 1 },
+				{ "name": "V-Mount-Akku 150 Wh", "menge": 4 }
+			]
+		}
+	]
+}

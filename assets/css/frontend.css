@@ -1,0 +1,830 @@
+/**
+ * CineRent Shop – Frontend.
+ *
+ * Nordisch kühl: feine Linien, 2px Rundung, viel Weißraum, keine Verläufe.
+ * Farben und Schriften kommen bevorzugt aus dem Elementor-Kit (--e-global-…),
+ * die Werte dahinter sind die CineRent-Vorgaben als Rückfall.
+ * Alles lässt sich zusätzlich im Elementor-Panel je Widget überschreiben.
+ */
+
+:root {
+	--cr-nacht: #11181c;
+	--cr-fjord: #2c4a5a;
+	--cr-eis: #dce5ea;
+	--cr-frost: #f3f5f6;
+	--cr-stein: #59656e;
+	--cr-frei: #2f7a4e;
+	--cr-belegt: #b3261e;
+	--cr-radius: 2px;
+	--cr-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/*
+ * Elementor setzt die Kit-Variablen auf body.elementor-kit-…, deshalb werden
+ * die abgeleiteten Variablen erst an den Widgets aufgelöst, nicht auf :root.
+ */
+[data-cr],
+.cr-dialog,
+.cr-specs,
+.cr-kit {
+	--cr-text: var(--e-global-color-text, var(--cr-nacht));
+	--cr-neben: var(--e-global-color-secondary, var(--cr-stein));
+	--cr-akzent: var(--e-global-color-accent, var(--cr-fjord));
+	--cr-linie: var(--cr-eis);
+	--cr-font: var(--e-global-typography-text-font-family, "Schibsted Grotesk"), system-ui, -apple-system, "Segoe UI", sans-serif;
+	font-family: var(--cr-font);
+	color: var(--cr-text);
+	box-sizing: border-box;
+}
+
+[data-cr] [data-cr] {
+	font-family: inherit;
+}
+
+[data-cr] *,
+.cr-dialog * {
+	box-sizing: inherit;
+}
+
+.cr-icon {
+	display: inline-block;
+	flex: none;
+	width: 1em;
+	height: 1em;
+	vertical-align: -0.125em;
+}
+
+/* Preise und technische Daten in Mono ------------------------------------- */
+
+.cr-preis,
+.cr-specs dd,
+.cr-specs-zeile,
+.cr-kit__menge,
+.cr-liste__anzahl,
+.cr-zeitraum__dauer {
+	font-family: var(--cr-mono);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0;
+}
+
+/* Eingabefelder und Buttons ----------------------------------------------- */
+
+.cr-input {
+	display: block;
+	width: 100%;
+	min-height: 2.75em;
+	padding: 0.6em 0.75em;
+	font: inherit;
+	color: var(--cr-text);
+	background: #fff;
+	border: 1px solid var(--cr-eis);
+	border-radius: var(--cr-radius);
+	box-shadow: none;
+	transition: border-color 0.15s ease;
+}
+
+.cr-input:hover {
+	border-color: var(--cr-stein);
+}
+
+.cr-input:focus {
+	border-color: var(--cr-akzent);
+	outline: 1px solid var(--cr-akzent);
+	outline-offset: 0;
+}
+
+.cr-input[aria-invalid="true"] {
+	border-color: var(--cr-belegt);
+}
+
+.cr-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5em;
+	min-height: 2.75em;
+	padding: 0.65em 1.25em;
+	font: inherit;
+	font-weight: 500;
+	line-height: 1.2;
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+	background: var(--cr-akzent);
+	border: 1px solid var(--cr-akzent);
+	border-radius: var(--cr-radius);
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.cr-button:hover,
+.cr-button:focus-visible {
+	color: #fff;
+	background: var(--cr-nacht);
+	border-color: var(--cr-nacht);
+}
+
+.cr-button:focus-visible,
+.cr-liste__knopf:focus-visible,
+.cr-liste__entfernen:focus-visible,
+.cr-kalender__nav:focus-visible,
+.cr-kalender__tag:focus-visible {
+	outline: 2px solid var(--cr-akzent);
+	outline-offset: 2px;
+}
+
+.cr-button:disabled {
+	cursor: progress;
+	opacity: 0.6;
+}
+
+.cr-button--ghost {
+	color: var(--cr-text);
+	background: transparent;
+	border-color: var(--cr-eis);
+}
+
+.cr-button--ghost:hover,
+.cr-button--ghost:focus-visible {
+	color: var(--cr-text);
+	background: var(--cr-frost);
+	border-color: var(--cr-stein);
+}
+
+/* Technische Daten und Kit-Inhalt (Dynamic Tags) -------------------------- */
+
+.cr-specs {
+	margin: 0;
+	border-top: 1px solid var(--cr-linie);
+}
+
+.cr-specs__row {
+	display: grid;
+	grid-template-columns: minmax(8em, 40%) 1fr;
+	gap: 1em;
+	padding: 0.55em 0;
+	border-bottom: 1px solid var(--cr-linie);
+}
+
+.cr-specs dt {
+	margin: 0;
+	color: var(--cr-neben);
+}
+
+.cr-specs dd {
+	margin: 0;
+}
+
+.cr-kit {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid var(--cr-linie);
+}
+
+.cr-kit li {
+	display: flex;
+	gap: 0.75em;
+	padding: 0.5em 0;
+	border-bottom: 1px solid var(--cr-linie);
+}
+
+.cr-kit__menge {
+	min-width: 2.5em;
+	color: var(--cr-neben);
+}
+
+/* Zeitraum-Auswahl --------------------------------------------------------- */
+
+.cr-zeitraum__felder {
+	display: flex;
+	align-items: flex-end;
+	gap: 0.75em;
+}
+
+.cr-zeitraum__feld {
+	display: flex;
+	flex: 1 1 0;
+	flex-direction: column;
+	gap: 0.35em;
+	min-width: 0;
+	margin: 0;
+}
+
+.cr-zeitraum__label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	font-size: 0.8125em;
+	color: var(--cr-neben);
+	letter-spacing: 0.02em;
+}
+
+.cr-zeitraum__pfeil {
+	display: flex;
+	align-items: center;
+	min-height: 2.75em;
+	color: var(--cr-neben);
+}
+
+.cr-zeitraum__dauer {
+	display: block;
+	margin-top: 0.6em;
+	font-size: 0.875em;
+	color: var(--cr-akzent);
+}
+
+.cr-zeitraum__fehler {
+	margin: 0.5em 0 0;
+	font-size: 0.875em;
+	color: var(--cr-belegt);
+}
+
+.cr-zeitraum--kompakt {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5em 0.75em;
+	font-size: 0.875rem;
+}
+
+.cr-zeitraum--kompakt .cr-zeitraum__felder {
+	align-items: center;
+	gap: 0.4em;
+}
+
+.cr-zeitraum--kompakt .cr-zeitraum__feld {
+	flex-direction: row;
+	align-items: center;
+}
+
+.cr-zeitraum--kompakt .cr-zeitraum__label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+.cr-zeitraum--kompakt .cr-input {
+	width: auto;
+	min-height: 2.25em;
+	padding: 0.3em 0.5em;
+}
+
+.cr-zeitraum--kompakt .cr-zeitraum__pfeil {
+	min-height: 0;
+}
+
+.cr-zeitraum--kompakt .cr-zeitraum__dauer {
+	margin-top: 0;
+	white-space: nowrap;
+}
+
+.cr-zeitraum--gross .cr-zeitraum__label {
+	font-size: 0.875em;
+}
+
+@media (max-width: 480px) {
+	.cr-zeitraum--gross .cr-zeitraum__felder {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.cr-zeitraum--gross .cr-zeitraum__pfeil {
+		display: none;
+	}
+}
+
+/* Verfügbarkeits-Badge ----------------------------------------------------- */
+
+.cr-badge {
+	--cr-badge-farbe: var(--cr-stein);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45em;
+	padding: 0.25em 0.6em;
+	font-size: 0.8125em;
+	line-height: 1.3;
+	color: var(--cr-badge-farbe);
+	background: transparent;
+	border: 1px solid currentColor;
+	border-radius: var(--cr-radius);
+}
+
+.cr-badge--frei {
+	--cr-badge-farbe: var(--cr-frei);
+}
+
+.cr-badge--belegt {
+	--cr-badge-farbe: var(--cr-belegt);
+}
+
+.cr-badge__punkt {
+	display: none;
+	width: 0.5em;
+	height: 0.5em;
+	background: currentColor;
+	border-radius: 50%;
+}
+
+.cr-badge--punkt .cr-badge__punkt {
+	display: inline-block;
+}
+
+/* Kalender ----------------------------------------------------------------- */
+
+.cr-kalender {
+	position: relative;
+}
+
+.cr-kalender__kopf {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	gap: 0.25em;
+}
+
+.cr-kalender__nav {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2em;
+	height: 2em;
+	padding: 0;
+	color: var(--cr-text);
+	cursor: pointer;
+	background: transparent;
+	border: 1px solid var(--cr-eis);
+	border-radius: var(--cr-radius);
+}
+
+.cr-kalender__nav:hover {
+	border-color: var(--cr-stein);
+}
+
+.cr-kalender__monate {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 24rem));
+	gap: 2em;
+}
+
+.cr-kalender__monat-titel {
+	min-height: 2em;
+	margin: 0 0 0.75em;
+	padding-right: 4.75em;
+	font-weight: 500;
+	line-height: 2em;
+}
+
+.cr-kalender__raster {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 2px;
+}
+
+.cr-kalender__wochentag {
+	padding-bottom: 0.35em;
+	font-size: 0.75em;
+	color: var(--cr-neben);
+	text-align: center;
+	letter-spacing: 0.04em;
+}
+
+.cr-kalender__tag {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1 / 1;
+	padding: 0;
+	font: inherit;
+	font-family: var(--cr-mono);
+	font-size: 0.8125em;
+	color: var(--cr-text);
+	background: var(--cr-frost);
+	border: 1px solid transparent;
+	border-radius: var(--cr-radius);
+}
+
+button.cr-kalender__tag {
+	cursor: pointer;
+}
+
+button.cr-kalender__tag:hover {
+	border-color: var(--cr-akzent);
+}
+
+.cr-kalender__tag.is-heute {
+	border-color: var(--cr-stein);
+}
+
+.cr-kalender__tag.is-vergangen {
+	color: var(--cr-stein);
+	cursor: default;
+	background: transparent;
+	opacity: 0.45;
+}
+
+.cr-kalender__tag.is-belegt {
+	color: var(--cr-belegt);
+	text-decoration: line-through;
+	background: transparent;
+	border-color: var(--cr-belegt);
+}
+
+.cr-kalender__tag.is-auswahl {
+	color: #fff;
+	background: var(--cr-akzent);
+}
+
+.cr-kalender__tag.is-auswahl.is-belegt {
+	background: var(--cr-belegt);
+}
+
+.cr-kalender__hinweis {
+	margin: 1em 0 0;
+	font-size: 0.875em;
+	color: var(--cr-neben);
+}
+
+.cr-kalender__legende {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em 1.25em;
+	margin: 1em 0 0;
+	padding: 0;
+	font-size: 0.8125em;
+	color: var(--cr-neben);
+	list-style: none;
+}
+
+.cr-kalender__legende li {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+}
+
+.cr-kalender__muster {
+	display: inline-block;
+	width: 0.9em;
+	height: 0.9em;
+	border: 1px solid transparent;
+	border-radius: var(--cr-radius);
+}
+
+.cr-kalender__muster--frei {
+	background: var(--cr-frost);
+	border-color: var(--cr-eis);
+}
+
+.cr-kalender__muster--belegt {
+	border-color: var(--cr-belegt);
+}
+
+.cr-kalender__muster--auswahl {
+	background: var(--cr-akzent);
+}
+
+/* Button "Zur Anfrageliste" ------------------------------------------------ */
+
+.cr-add {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.cr-button.is-added {
+	color: var(--cr-akzent);
+	background: transparent;
+}
+
+/* Anfrageliste ------------------------------------------------------------- */
+
+.cr-liste--mini {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45em;
+	color: var(--cr-text);
+	text-decoration: none;
+}
+
+.cr-liste--mini .cr-icon {
+	font-size: 1.25em;
+}
+
+.cr-liste__zaehler {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.5em;
+	height: 1.5em;
+	padding: 0 0.35em;
+	font-family: var(--cr-mono);
+	font-size: 0.75em;
+	color: #fff;
+	background: var(--cr-akzent);
+	border-radius: var(--cr-radius);
+}
+
+.cr-liste--mini.is-leer .cr-liste__zaehler {
+	color: var(--cr-neben);
+	background: var(--cr-eis);
+}
+
+.cr-liste__zeitraum {
+	margin-bottom: 1em;
+	font-family: var(--cr-mono);
+	font-size: 0.875em;
+	color: var(--cr-neben);
+}
+
+.cr-liste__zeitraum.is-fehlt {
+	font-family: var(--cr-font);
+	color: var(--cr-belegt);
+}
+
+.cr-liste__eintraege {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid var(--cr-linie);
+}
+
+.cr-liste__eintrag {
+	display: grid;
+	grid-template-columns: auto 1fr auto auto auto;
+	align-items: center;
+	gap: 1em;
+	padding: 0.75em 0;
+	border-bottom: 1px solid var(--cr-linie);
+}
+
+.cr-liste__eintrag:not(:has(.cr-liste__bild)) {
+	grid-template-columns: 1fr auto auto auto;
+}
+
+.cr-liste__bild {
+	width: 3.5em;
+	height: 3.5em;
+	object-fit: cover;
+	background: var(--cr-frost);
+	border-radius: var(--cr-radius);
+}
+
+.cr-liste__name {
+	color: var(--cr-text);
+	text-decoration: none;
+}
+
+.cr-liste__name:hover {
+	color: var(--cr-akzent);
+	text-decoration: underline;
+}
+
+.cr-liste__menge {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid var(--cr-eis);
+	border-radius: var(--cr-radius);
+}
+
+.cr-liste__knopf,
+.cr-liste__entfernen {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2em;
+	height: 2em;
+	padding: 0;
+	color: var(--cr-text);
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	border-radius: var(--cr-radius);
+}
+
+.cr-liste__knopf:hover,
+.cr-liste__entfernen:hover {
+	color: var(--cr-akzent);
+	background: var(--cr-frost);
+}
+
+.cr-liste__entfernen {
+	color: var(--cr-neben);
+}
+
+.cr-liste__anzahl {
+	min-width: 1.75em;
+	text-align: center;
+}
+
+.cr-liste__preis {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.cr-liste__leer {
+	padding: 1.25em 0;
+	color: var(--cr-neben);
+	border-bottom: 1px solid var(--cr-linie);
+}
+
+.cr-liste__summe {
+	display: flex;
+	justify-content: space-between;
+	gap: 1em;
+	padding: 1em 0 0;
+	font-weight: 500;
+}
+
+.cr-liste__hinweis {
+	margin: 0.5em 0 0;
+	font-size: 0.8125em;
+	color: var(--cr-neben);
+}
+
+.cr-liste__weiter {
+	margin: 1.5em 0 0;
+}
+
+@media (max-width: 600px) {
+	.cr-liste__eintrag,
+	.cr-liste__eintrag:not(:has(.cr-liste__bild)) {
+		grid-template-columns: 1fr auto;
+	}
+
+	.cr-liste__bild {
+		display: none;
+	}
+}
+
+/* Anfrageformular ---------------------------------------------------------- */
+
+.cr-formular__liste {
+	margin-bottom: 2.5em;
+}
+
+.cr-formular__felder {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.25em;
+}
+
+.cr-formular__feld {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35em;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.cr-formular__feld--lieferung,
+.cr-formular__feld--nachricht,
+.cr-formular__feld--check {
+	grid-column: 1 / -1;
+}
+
+.cr-formular__feld--lieferung {
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.5em 1.5em;
+}
+
+.cr-formular__feld--lieferung legend {
+	width: 100%;
+	margin-bottom: 0.35em;
+	padding: 0;
+}
+
+.cr-formular__label {
+	font-size: 0.875em;
+	color: var(--cr-neben);
+}
+
+.cr-formular__pflicht {
+	color: var(--cr-belegt);
+}
+
+.cr-formular__option {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: 0.6em;
+	line-height: 1.45;
+	cursor: pointer;
+}
+
+.cr-formular__option input {
+	flex: none;
+	width: 1.05em;
+	height: 1.05em;
+	margin: 0.2em 0 0;
+	accent-color: var(--cr-akzent);
+}
+
+.cr-formular__option a {
+	color: var(--cr-akzent);
+}
+
+.cr-formular textarea.cr-input {
+	min-height: 8em;
+	resize: vertical;
+}
+
+/* Honeypot: ausgeblendet, aber nicht display:none (manche Bots prüfen das). */
+.cr-formular__hp {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.cr-formular__altcha {
+	min-height: 1.5em;
+	margin-top: 1.25em;
+	font-size: 0.8125em;
+	color: var(--cr-neben);
+}
+
+.cr-formular__meldung {
+	margin: 1em 0 0;
+	padding: 0.85em 1em;
+	border: 1px solid currentColor;
+	border-radius: var(--cr-radius);
+}
+
+.cr-formular__meldung.is-fehler {
+	color: var(--cr-belegt);
+}
+
+.cr-formular__meldung.is-erfolg {
+	color: var(--cr-frei);
+}
+
+.cr-formular__absenden {
+	margin: 1.25em 0 0;
+}
+
+.cr-formular__pflichthinweis {
+	margin: 0.75em 0 0;
+	font-size: 0.75em;
+	color: var(--cr-neben);
+}
+
+.cr-formular.is-gesendet .cr-formular__felder,
+.cr-formular.is-gesendet .cr-formular__absenden,
+.cr-formular.is-gesendet .cr-formular__pflichthinweis,
+.cr-formular.is-gesendet .cr-formular__liste {
+	display: none;
+}
+
+@media (max-width: 600px) {
+	.cr-formular__felder {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Dialog: Zeitraum wählen -------------------------------------------------- */
+
+.cr-dialog {
+	width: min(32em, calc(100vw - 2em));
+	padding: 0;
+	color: var(--cr-text);
+	background: #fff;
+	border: 1px solid var(--cr-eis);
+	border-radius: var(--cr-radius);
+	box-shadow: 0 1px 0 var(--cr-eis);
+}
+
+.cr-dialog::backdrop {
+	background: rgba(17, 24, 28, 0.45);
+}
+
+.cr-dialog__inhalt {
+	padding: 1.75em;
+}
+
+.cr-dialog__titel {
+	margin: 0 0 1.25em;
+	font-weight: 500;
+}
+
+.cr-dialog__aktionen {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.75em;
+	margin-top: 1.5em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cr-input,
+	.cr-button {
+		transition: none;
+	}
+}

@@ -1,0 +1,89 @@
+/**
+ * CineRent Shop – Backend: Schreibschutz für Equipment-Beiträge.
+ */
+
+.post-type-equipment #title,
+.post-type-equipment #titlewrap input {
+	color: #59656e;
+	cursor: not-allowed;
+	background: #f3f5f6;
+}
+
+.post-type-equipment #edit-slug-buttons,
+.post-type-equipment .page-title-action {
+	display: none;
+}
+
+.cinerent-readonly-notice {
+	margin: 12px 0 !important;
+	border-left-color: #2c4a5a !important;
+}
+
+.cinerent-readonly {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.cinerent-readonly th {
+	width: 180px;
+	color: #59656e;
+}
+
+.cinerent-readonly input[readonly] {
+	color: #59656e;
+	background: #f3f5f6;
+	border-color: #dce5ea;
+}
+
+.cinerent-readonly__content {
+	max-height: 260px;
+	padding: 8px 12px;
+	overflow: auto;
+	color: #59656e;
+	background: #f3f5f6;
+	border: 1px solid #dce5ea;
+	border-radius: 2px;
+}
+
+.cinerent-readonly .cr-specs,
+.cinerent-readonly .cr-kit {
+	margin: 0;
+	padding: 0;
+	color: #59656e;
+}
+
+.cinerent-readonly .cr-specs__row {
+	display: flex;
+	gap: 12px;
+}
+
+.cinerent-readonly .cr-specs dt {
+	min-width: 160px;
+	font-weight: 600;
+}
+
+.cinerent-readonly .cr-specs dd {
+	margin: 0;
+	font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.cinerent-readonly .cr-kit {
+	list-style: none;
+}
+
+.cinerent-readonly__bilder img {
+	margin: 0 8px 8px 0;
+	border: 1px solid #dce5ea;
+	border-radius: 2px;
+}
+
+.cinerent-admin__sync {
+	max-width: 760px;
+	margin: 16px 0 24px;
+	padding: 4px 20px 16px;
+	background: #fff;
+	border: 1px solid #dce5ea;
+	border-radius: 2px;
+}

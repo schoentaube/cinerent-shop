@@ -1,0 +1,11 @@
+.git
+.gitignore
+.distignore
+bin
+dist
+vendor
+node_modules
+composer.json
+composer.lock
+phpcs.xml.dist
+.DS_Store
